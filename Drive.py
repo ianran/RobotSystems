@@ -13,11 +13,12 @@
 
 
 import picarx_improved as car
+import math
 
 
 
-
-class Drive(Object):
+class Drive(object):
+    _instance = None
     # constructor as singleton class
     def __new__(cls):
         if cls._instance is None:
@@ -31,31 +32,41 @@ class Drive(Object):
 
             cls.left_motor = car.PWM('P13')
             cls.right_motor = car.PWM('P12')
-            cls.steer_servo = car.Servo('P2')
+            cls.left_dir = car.Pin("D4")
+            cls.right_dir = car.Pin("D5")
+            cls.steer_servo = car.Servo(car.PWM('P2'))
 
         # return instance
         return cls._instance
 
     # set motor speed
-    @staticmethod
-    def set_motor_speed(pwm, speed):
-        if speed < 0
-            pwm.high()
-            pwm.pulse_width_percent(speed)
+    # @param L - the left motor speed (-100, 0, 100)
+    # @param R - the right motor speed (-100, 0, 100)
+    def set_speed(self, L, R):
+        if L < 0:
+            self.left_dir.high()
+            self.left_motor.pulse_width_percent(L)
         else:
-            pwm.low()
-            pwm.pulse_width_percent(speed)
+            self.left_dir.low()
+            self.left_motor.pulse_width_percent(L)
 
-    def stop():
-        Drive.set_motor_speed(self.left_motor, 0)
-        Drive.set_motor_speed(self.right_motor, 0)
+        if R < 0:
+            self.right_dir.high()
+            self.right_motor.pulse_width_percent(R)
+        else:
+            self.right_dir.low()
+            self.right_motor.pulse_width_percent(R)
+
+
+    def stop(self):
+        self.set_speed(0,0)
 
     # forward setting
     # @param speed - input between -100,100, with 0 being stopped
     # @param angle - the input steering angle (-30, 30) (degrees)
     # @param differential - set to false if differential on
     #                       powered motors is not desired.
-    def foward(self, speed, angle, differential=True):
+    def forward(self, speed, angle, differential=True):
         if speed > 100:
             speed = 100
         elif speed < -100:
@@ -79,6 +90,8 @@ class Drive(Object):
                 rl_ratio = r / (r + self.width)
                 R = speed
                 L = speed * rl_ratio
+            else:
+                L = R = speed
         else:
             # no differential
             L = speed
@@ -86,5 +99,4 @@ class Drive(Object):
 
         # set speeds.
         self.steer_servo.angle(angle)
-        Drive.set_motor_speed(self.left_motor, L)
-        Drive.set_motor_speed(self.right_motor, R)
+        self.set_speed(L, R)
