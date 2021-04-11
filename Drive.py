@@ -34,7 +34,7 @@ class Drive(object):
             cls.right_motor = car.PWM('P12')
             cls.left_dir = car.Pin("D4")
             cls.right_dir = car.Pin("D5")
-            cls.steer_calib = -4
+            cls.steer_calib = -17
             cls.steer_servo = car.Servo(car.PWM('P2'))
 
         # return instance
