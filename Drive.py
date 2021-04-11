@@ -34,6 +34,7 @@ class Drive(object):
             cls.right_motor = car.PWM('P12')
             cls.left_dir = car.Pin("D4")
             cls.right_dir = car.Pin("D5")
+            cls.steer_calib = -17
             cls.steer_servo = car.Servo(car.PWM('P2'))
 
         # return instance
@@ -43,7 +44,7 @@ class Drive(object):
     # @param L - the left motor speed (-100, 0, 100)
     # @param R - the right motor speed (-100, 0, 100)
     def set_speed(self, L, R):
-        if L < 0:
+        if L > 0:
             self.left_dir.high()
             self.left_motor.pulse_width_percent(L)
         else:
@@ -60,6 +61,9 @@ class Drive(object):
 
     def stop(self):
         self.set_speed(0,0)
+
+    def set_steer(self, angle):
+        self.steer_servo.angle(angle + self.steer_calib)
 
     # forward setting
     # @param speed - input between -100,100, with 0 being stopped
@@ -82,11 +86,11 @@ class Drive(object):
             # radius of to the center of the circle
             r = self.length / math.cos(abs(theta))
 
-            if theta > 0:
+            if theta < 0:
                 lr_ratio = r / (r + self.width)
                 L = speed
                 R = speed * lr_ratio
-            elif theta < 0:
+            elif theta > 0:
                 rl_ratio = r / (r + self.width)
                 R = speed
                 L = speed * rl_ratio
@@ -98,5 +102,5 @@ class Drive(object):
             R = speed
 
         # set speeds.
-        self.steer_servo.angle(angle)
+        self.set_steer(angle)
         self.set_speed(L, R)

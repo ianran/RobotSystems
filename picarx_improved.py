@@ -1,8 +1,11 @@
 import time
 import math
 
+import pdb
+
 try:
     from ezblock import *
+    from ezblock import __reset_mcu__
     __reset_mcu__()
     time.sleep(0.01)
 except ImportError:
@@ -14,7 +17,7 @@ except ImportError:
 
 def cleanup():
     print('Exiting program, ensuring motors are stopped')
-    stop()
+    set_power(0)
 
 import atexit
 atexit.register(cleanup)
