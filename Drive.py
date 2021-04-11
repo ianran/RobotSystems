@@ -14,7 +14,7 @@
 
 import picarx_improved as car
 import math
-
+import time
 
 
 class Drive(object):
@@ -104,3 +104,33 @@ class Drive(object):
         # set speeds.
         self.set_steer(angle)
         self.set_speed(L, R)
+
+
+    # @param speed - speed
+    # @param angle - angle to turn + value is right, - value is left.
+    # @param time - the time to run the maneuver
+    def maneuver(self, speed, angle, time):
+        self.forward(speed, angle)
+        time.sleep(time)
+
+    def parallel_park(self, left):
+        park_time = 0.4
+
+        turn_angle = 20
+        if left:
+            turn_angle = -turn_angle
+
+        maneuver(-0.3, turn_angle, park_time)
+        maneuver(-0.3, -turn_angle, park_time)
+        maneuver(0.3, 0, park_time/2)
+
+    def k_turn(self, left):
+        turn_angle = 20
+        turn_time = 0.3
+
+        if left:
+            turn_angle = -turn_angle
+
+        maneuver(0.3, turn_angle, turn_time)
+        maneuver(-0.3, -turn_angle, turn_time)
+        maneuver(0.3, 0, 0.05)
