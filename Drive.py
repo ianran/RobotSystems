@@ -117,23 +117,23 @@ class Drive(object):
         time.sleep(time_run)
 
     def parallel_park(self, left):
-        park_time = 0.7
+        park_time = 0.4
 
         turn_angle = 20
         if left:
             turn_angle = -turn_angle
 
-        self.maneuver(-0.3, turn_angle, park_time)
-        self.maneuver(-0.3, -turn_angle, park_time)
-        self.maneuver(0.3, 0, park_time/2)
+        self.maneuver(-15, turn_angle, park_time)
+        self.maneuver(-15, -turn_angle, park_time)
+        self.maneuver(15, 0, park_time/2)
 
     def k_turn(self, left):
         turn_angle = 20
-        turn_time = 0.6
+        turn_time = 0.9
 
         if left:
             turn_angle = -turn_angle
 
-        self.maneuver(0.3, turn_angle, turn_time)
-        self.maneuver(-0.3, -turn_angle, turn_time)
-        self.maneuver(0.3, 0, 0.05)
+        self.maneuver(15, turn_angle, turn_time)
+        self.maneuver(-15, -turn_angle, turn_time)
+        self.maneuver(15, 0, 0.05)
