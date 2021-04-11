@@ -109,9 +109,9 @@ class Drive(object):
     # @param speed - speed
     # @param angle - angle to turn + value is right, - value is left.
     # @param time - the time to run the maneuver
-    def maneuver(self, speed, angle, time):
+    def maneuver(self, speed, angle, time_run):
         self.forward(speed, angle)
-        time.sleep(time)
+        time.sleep(time_run)
 
     def parallel_park(self, left):
         park_time = 0.4
@@ -120,9 +120,9 @@ class Drive(object):
         if left:
             turn_angle = -turn_angle
 
-        maneuver(-0.3, turn_angle, park_time)
-        maneuver(-0.3, -turn_angle, park_time)
-        maneuver(0.3, 0, park_time/2)
+        self.maneuver(-0.3, turn_angle, park_time)
+        self.maneuver(-0.3, -turn_angle, park_time)
+        self.maneuver(0.3, 0, park_time/2)
 
     def k_turn(self, left):
         turn_angle = 20
@@ -131,6 +131,6 @@ class Drive(object):
         if left:
             turn_angle = -turn_angle
 
-        maneuver(0.3, turn_angle, turn_time)
-        maneuver(-0.3, -turn_angle, turn_time)
-        maneuver(0.3, 0, 0.05)
+        self.maneuver(0.3, turn_angle, turn_time)
+        self.maneuver(-0.3, -turn_angle, turn_time)
+        self.maneuver(0.3, 0, 0.05)
