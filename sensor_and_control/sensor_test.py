@@ -15,13 +15,13 @@ if __name__ == '__main__':
 
     #controller = LineController(light_sensor, drive)
 
-
-
-
-
     while True:
         brightness = light_sensor.read()
+        transitions = light_sensor.read_transition()
+        loc = light_sensor.get()
         print(brightness)
+        print(transitions)
+        print(loc)
         time.sleep(0.5)
 
     print('Quiting')

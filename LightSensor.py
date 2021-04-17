@@ -8,6 +8,8 @@
 import picarx_improved as car
 from LineInterpreter import LineInterpreter
 import time
+from math import sqrt
+from statistics import mean, variance
 
 class LightSensor(LineInterpreter):
     _instance = None
@@ -21,18 +23,29 @@ class LightSensor(LineInterpreter):
             cls.A1 = car.ADC('A1')
             cls.A2 = car.ADC('A2')
 
-            cls.calibrate()
+            cls._instance.calibrate(1.0)
+            cls.light_transitions = True
+            cls.std_away = 2
 
         # end if for lazy initialization
         return cls._instance
 
-    def calibrate(self):
+    def calibrate(self, time=1.0):
         vals_0 = []
         vals_1 = []
         vals_2 = []
 
-        for i in range(50):
-            vals = self.read_raw()
+        iterations = int(1.0/0.02)
+
+        for i in range(iterations):
+            vals = self.read()
+            vals_0.append(vals[0])
+            vals_1.append(vals[1])
+            vals_2.append(vals[2])
+
+        self.mean = [mean(vals_0), mean(vals_1), mean(vals_2)]
+        self.std = [variance(vals_0), variance(vals_1), variance(vals_2)]
+        self.std = [sqrt(s) for s in self.std]
 
 
     # read
@@ -45,10 +58,55 @@ class LightSensor(LineInterpreter):
         val_2 = self.A2.read()
 
         return [val_0, val_1, val_2]
+
+    def read_transition(self):
+        vals = self.read()
+
+
+        for i in range(3):
+            if self.std[i] < 1:
+                self.std[i] = 1
+            vals[i] = (vals[i] - self.mean[i]) / self.std[i]
+
+        if self.light_transitions:
+            return [v > self.std_away for v in vals]
+        else:
+            return [v < self.std_away for v in vals]
+
+
+
+
+
+
     # get
     # @override
     # This function overrides LineInterpreter
     #
     # @return - [-1, 1] output of where line is, or None if the line is not detected.
     def get(self):
-        return None
+        trans = self.read_transition()
+
+        sum = 0
+        for i in range(3):
+            if trans[i]:
+                sum += i+1
+
+        if sum == 0:
+            return None
+        mean = sum/3.0
+        return mean - 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
