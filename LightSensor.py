@@ -87,13 +87,15 @@ class LightSensor(LineInterpreter):
         trans = self.read_transition()
 
         sum = 0
+        total = 0
         for i in range(3):
             if trans[i]:
                 sum += i+1
+                total += 1
 
         if sum == 0:
             return None
-        mean = sum/3.0
+        mean = sum/total
         return mean - 2
 
 
