@@ -25,7 +25,7 @@ class LightSensor(LineInterpreter):
 
             cls._instance.calibrate(1.0)
             cls.light_transitions = True
-            cls.std_away = 2
+            cls.std_away = 3
 
         # end if for lazy initialization
         return cls._instance
