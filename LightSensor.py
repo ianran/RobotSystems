@@ -7,6 +7,7 @@
 
 import picarx_improved as car
 from LineInterpreter import LineInterpreter
+import time
 
 class LightSensor(LineInterpreter):
     _instance = None
@@ -20,9 +21,18 @@ class LightSensor(LineInterpreter):
             cls.A1 = car.ADC('A1')
             cls.A2 = car.ADC('A2')
 
+            cls.calibrate()
+
         # end if for lazy initialization
         return cls._instance
 
+    def calibrate(self):
+        vals_0 = []
+        vals_1 = []
+        vals_2 = []
+
+        for i in range(50):
+            vals = self.read_raw()
 
 
     # read
