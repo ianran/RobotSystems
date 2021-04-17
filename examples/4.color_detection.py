@@ -6,7 +6,7 @@ from ezblock import WiFi
 
 Vilib.camera_start(True)
 Vilib.color_detect_switch(True)
-Vilib.detect_color_name('red')
+Vilib.detect_color_name('blue')
 #WiFi().write('CN', 'MakerStarsHall', 'sunfounder')
 
 
