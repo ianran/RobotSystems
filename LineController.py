@@ -19,9 +19,9 @@ class LineController():
         self.last_time = None
         self.setpoint = 0 # just in case this needs to be modified for what ever reason
 
-        self.default_angle = -15
+        self.default_angle = 0
 
-        self.kp = 0
+        self.kp = 15   
         self.ki = 0
         self.kd = 0
 
@@ -51,11 +51,14 @@ class LineController():
             dt = cur_time - self.last_time
 
             # handle integral term
-            int_accum += err * dt
-            derv = (err - self.last_error) / dt
+            self.int_accum += err * dt
+            if dt != 0:
+                derv = (err - self.last_error) / dt
+            else:
+                derv = 0
 
             # PID controller
-            output = self.kp*err + self.ki*int_accum + self.kd*derv
+            output = self.kp*err + self.ki*self.int_accum + self.kd*derv
 
             self.last_error = err
 
@@ -66,5 +69,5 @@ class LineController():
             output = -30
 
         self.last_time = cur_time
-        self.drive.forward(30, output)
+        self.drive.forward(10, output)
         return output

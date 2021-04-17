@@ -18,6 +18,8 @@ if __name__ == '__main__':
 
     while True:
         servo_angle = controller.update()
+        transitions = light_sensor.read_transition()
+        print(transitions)
         print(servo_angle)
         time.sleep(0.05)
 
