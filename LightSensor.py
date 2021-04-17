@@ -34,7 +34,7 @@ class LightSensor(LineInterpreter):
         val_1 = self.A1.read()
         val_2 = self.A2.read()
 
-
+        return [val_0, val_1, val_2]
     # get
     # @override
     # This function overrides LineInterpreter
