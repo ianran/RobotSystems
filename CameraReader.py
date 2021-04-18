@@ -13,7 +13,7 @@ class CameraReader():
 
         self.rawCapture = PiRGBArray(self.camera, size=(640, 480))
 
-        self.lower_blue = np.array([90,150,130])
+        self.lower_blue = np.array([90,120,50])
         self.upper_blue = np.array([110,255,190])
 
         time.sleep(0.1)
@@ -23,8 +23,6 @@ class CameraReader():
 
     def process_centroid(self, image):
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        lower_blue = np.array([90,150,130])
-        upper_blue = np.array([110,255,190])
         mask = cv2.inRange(hsv, self.lower_blue, self.upper_blue)
 
         #print(mask.shape)
@@ -45,14 +43,16 @@ class CameraReader():
 
 
     def get_stream(self):
-        return reader.camera.capture_continuous(reader.rawCapture, format="bgr", use_video_port=True)
+        return self.camera.capture_continuous(self.rawCapture, format="bgr", use_video_port=True)
 
 
     def get(self):
         x, y = self.process_centroid(self.image)
+        if x is None:
+            return None
 
         half = 640/2
-        return (x / half) - 1
+        return -((x / half) - 1)
 
 
 if __name__ == '__main__':
@@ -65,7 +65,7 @@ if __name__ == '__main__':
         image = frame.array
 
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        lower_blue = np.array([90,150,130])
+        lower_blue = np.array([90,120,20])
         upper_blue = np.array([110,255,190])
         mask = cv2.inRange(hsv, lower_blue, upper_blue)
 
@@ -86,7 +86,7 @@ if __name__ == '__main__':
         print(cX)
         print(cY)
 
-        cv2.imshow('Frame', small_mask)
+        cv2.imshow('Frame', mask)
         key=cv2.waitKey(1) & 0xFF
 
         reader.rawCapture.truncate(0)
