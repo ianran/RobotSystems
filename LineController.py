@@ -21,7 +21,7 @@ class LineController():
 
         self.default_angle = 0
 
-        self.kp = 15   
+        self.kp = 15
         self.ki = 0
         self.kd = 0
 
@@ -33,8 +33,9 @@ class LineController():
     # angle because it was requested.
     #
     # @return - output servo angle
-    def update(self):
-        loc = self.line.get()
+    def update(self, loc=None):
+        if loc is None:
+            loc = self.line.get()
         cur_time = time.time()
 
 
