@@ -16,17 +16,17 @@ from LightSensor import LightSensor
 
 
 def line_sensor_func(sensor_bus, line_sensor, time_delay):
-    loc = line_sensor.read_transition()
-    que.put(loc)
+    while True:
+        loc = line_sensor.get()
+        sensor_bus.put(loc)
+        time.sleep(time_delay)
 
 def line_intepreter_func(sensor_bus, controller, time_delay):
     frame = None
-    while not sensor_bus.empty():
-        frame = sensor_bus.get()
-        sensor_bus.task_done()
+    frame = sensor_bus.get()
+    sensor_bus.task_done()
 
-    if frame is not None:
-        controller.update(loc=frame)
+    controller.update(loc=frame)
 
     time.sleep(time_delay)
 
