@@ -11,6 +11,8 @@ import time
 from math import sqrt
 from statistics import mean, variance
 
+from threading import Lock
+
 class LightSensor(LineInterpreter):
     _instance = None
 
@@ -22,10 +24,12 @@ class LightSensor(LineInterpreter):
             cls.A0 = car.ADC('A0')
             cls.A1 = car.ADC('A1')
             cls.A2 = car.ADC('A2')
+            cls.lock = Lock()
 
             cls._instance.calibrate(1.0)
             cls.light_transitions = True
             cls.std_away = 4
+
 
         # end if for lazy initialization
         return cls._instance
@@ -53,9 +57,11 @@ class LightSensor(LineInterpreter):
     #
     # @return - returns the analog values for the light sensor.
     def read(self):
+        self.lock.acquire()
         val_0 = self.A0.read()
         val_1 = self.A1.read()
         val_2 = self.A2.read()
+        self.lock.release()
 
         return [val_0, val_1, val_2]
 
