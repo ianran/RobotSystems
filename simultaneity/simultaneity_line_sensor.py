@@ -16,8 +16,8 @@ from LightSensor import LightSensor
 
 
 def line_sensor_func(sensor_bus, line_sensor, time_delay):
-    while True:
-        pass
+    loc = line_sensor.read_transition()
+    que.put(loc)
 
 def line_intepreter_func(sensor_bus, controller, time_delay):
     frame = None
