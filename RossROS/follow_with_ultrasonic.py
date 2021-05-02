@@ -24,6 +24,7 @@ def line_intepreter_func(loc, distance):
     else:
         speed = 10
 
+    logging.info('line')
     controller.update(loc=loc, forward_speed=speed)
 
 
