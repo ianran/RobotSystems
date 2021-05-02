@@ -29,8 +29,8 @@ def main():
     #                    output_busses=bus, \
     #                    delay=delay, name='sensor_reader')
     #sensor_prod = ros.Timer(bus, delay=0.25, name='sensor_reader')
-    sensor_prod = LineSensorProd(bus, delay=0.25)
-    controller_cons = ros.Consumer(line_intepreter_func, bus, delay=0.5, name='interpreter')
+    sensor_prod = LineSensorProd(bus, delay=delay)
+    controller_cons = ros.Consumer(line_intepreter_func, bus, delay=delay, name='interpreter')
     #controller_cons = ros.Printer(bus, delay=0.5, name='pri')
 
 
