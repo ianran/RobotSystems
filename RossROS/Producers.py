@@ -38,5 +38,5 @@ class UltrasonicProd(ros.Producer):
 
 
     def ultra_func(self):
-        inches = self.ultra.read()
-        return inches
+        cm = self.ultra.read()
+        return cm
