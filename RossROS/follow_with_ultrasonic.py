@@ -31,7 +31,7 @@ def line_intepreter_func(loc, distance):
 
 def main():
     bus = ros.Bus(name='location_bus', initial_message=-1)
-    ultra_bus = ros.Bus(name='ultra_bus', initial_message=-1)
+    ultra_bus = ros.Bus(name='ultra_bus', initial_message=20)
     delay = 0.05
 
     sensor_prod = LineSensorProd(bus, delay=delay)
