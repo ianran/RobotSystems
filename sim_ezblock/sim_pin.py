@@ -139,7 +139,7 @@ class Pin(_Basic_class):
                 self.mode(self.IN)
             #result = GPIO.input(self._pin)
             result = False
-            self._debug("read pin %s: %s" % (self._pin, result))
+            #self._debug("read pin %s: %s" % (self._pin, result))
             return result
         else:
             value = value[0]

@@ -4,6 +4,7 @@ from .sim_servo import *
 from .sim_pwm import *
 from .sim_pin import *
 from .sim_adc import *
+from .sim_modules import *
 
 
 def __main__():

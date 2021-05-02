@@ -33,7 +33,7 @@ class LineController():
     # angle because it was requested.
     #
     # @return - output servo angle
-    def update(self, loc=None):
+    def update(self, loc=None, forward_speed=10):
         if loc is None:
             loc = self.line.get()
         cur_time = time.time()
@@ -70,5 +70,5 @@ class LineController():
             output = -30
 
         self.last_time = cur_time
-        self.drive.forward(10, output)
+        self.drive.forward(forward_speed, output)
         return output
