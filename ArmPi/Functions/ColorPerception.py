@@ -10,6 +10,24 @@ sys.path.append('/home/pi/ArmPi/')
 import LABConfig as lbc
 import CameraCalibration.CalibrationConfig as cconf
 
+
+
+# Find the contour with the largest area
+# The parameter is a list of contours to be compared
+def getAreaMaxContour(contours):
+    contour_area_temp = 0
+    contour_area_max = 0
+    area_max_contour = None
+
+    for c in contours:  # Traverse all contours
+        contour_area_temp = math.fabs(cv2.contourArea(c))  # Calculate the contour area
+        if contour_area_temp > contour_area_max:
+            contour_area_max = contour_area_temp
+            if contour_area_temp > 300:  # Only accept contours with area larger than 300
+                area_max_contour = c
+
+    return area_max_contour, contour_area_max  # Return the largest contour
+
 class ColorPerception():
     # constructor
     # @param
@@ -183,7 +201,7 @@ if __name__ == '__main__':
     import Camera
     import time
     import threading
-    
+
 
     target_color = ('red', 'green', 'blue')
     my_camera = Camera.Camera()
