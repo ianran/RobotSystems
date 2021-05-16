@@ -9,7 +9,8 @@ import sys
 sys.path.append('/home/pi/ArmPi/')
 import LABConfig as lbc
 import CameraCalibration.CalibrationConfig as cconf
-
+import math
+from ArmIK.Transform import *
 
 
 # Find the contour with the largest area
@@ -68,7 +69,7 @@ class ColorPerception():
         box = np.int0(cv2.boxPoints(rect))
 
         roi = getROI(box) #Get roi area
-        return rect, roi
+        return rect, roi, box
 
     def get_center_box(self, rect, roi):
         img_centerx, img_centery = getCenter(rect, roi, self.size, self.square_length)  # Get the center coordinates of the block
@@ -126,7 +127,7 @@ class ColorPerception():
 
 
             if max_area > self.min_box_area:  # Have found the largest area
-                rect, roi = self.fit_box(areaMaxContour)
+                rect, roi, box = self.fit_box(areaMaxContour)
 
                 get_roi = True
 
@@ -134,7 +135,7 @@ class ColorPerception():
                 world_x, world_y = self.convert_world_frame(img_centerx, img_centery)
 
 
-                cv2.drawContours(img, [box], -1, range_rgb[detect_color], 2)
+                cv2.drawContours(img, [box], -1, self.range_rgb[detect_color], 2)
                 cv2.putText(img, '(' + str(world_x) + ',' + str(world_y) + ')', (min(box[0, 0], box[2, 0]), box[2, 1] - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, range_rgb[detect_color], 1) #Draw center point
                 self.distance = math.sqrt(pow(world_x - self.last_x, 2) + pow(world_y - self.last_y, 2)) #Compare the last coordinate to determine whether to move
