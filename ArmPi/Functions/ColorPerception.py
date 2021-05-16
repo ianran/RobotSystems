@@ -13,7 +13,7 @@ import CameraCalibration.CalibrationConfig as cconf
 class ColorPerception():
     # constructor
     # @param
-    def __init__(self, target_color, min_box_area=2500, color_range=lbc.color_range, \
+    def __init__(self, target_colors, min_box_area=2500, color_range=lbc.color_range, \
                 size=(640, 480), square_length=cconf.square_length):
         self.min_box_area = min_box_area
         self.color_range = color_range
@@ -60,7 +60,7 @@ class ColorPerception():
         world_x, world_y = convertCoordinate(x, y, self.size) #Convert to real world coordinates
         return world_x, world_y
 
-    def preprocess(self, image):
+    def preprocess(self, img):
         img_h, img_w = img.shape[:2]
         cv2.line(img, (0, int(img_h / 2)), (img_w, int(img_h / 2)), (0, 0, 200), 1)
         cv2.line(img, (int(img_w / 2), 0), (int(img_w / 2), img_h), (0, 0, 200), 1)
@@ -70,12 +70,12 @@ class ColorPerception():
 
 
 
-        frame_resize = cv2.resize(img_copy, size, interpolation=cv2.INTER_NEAREST)
+        frame_resize = cv2.resize(img, self.size, interpolation=cv2.INTER_NEAREST)
         frame_gb = cv2.GaussianBlur(frame_resize, (11, 11), 11)
         #If an area is detected with a recognized object, it will continue to detect the area until there is none
-        if get_roi and start_pick_up:
-            get_roi = False
-            frame_gb = getMaskROI(frame_gb, roi, size)
+        #if get_roi and start_pick_up:
+        #    get_roi = False
+        #    frame_gb = getMaskROI(frame_gb, roi, size)
 
         frame_lab = cv2.cvtColor(frame_gb, cv2.COLOR_BGR2LAB)  # Convert image to LAB space
         return frame_lab
@@ -90,12 +90,12 @@ class ColorPerception():
         color_area_max = None
 
         if not start_pick_up:
-            for i in color_range:
+            for i in self.color_range:
                 if i in self.target_colors:
                     detect_color = i
                     frame_mask = self.thresh_image( frame_lab, \
-                                                    color_range[detect_color][0], \
-                                                    color_range[detect_color][1])
+                                                    self.color_range[detect_color][0], \
+                                                    self.color_range[detect_color][1])
                     closed = self.fill_image(frame_mask)
                     contours = self.get_contours(closed)
                     areaMaxContour, area_max = self.get_larget_contour(contours)
@@ -177,6 +177,14 @@ class ColorPerception():
         return img
 
 if __name__ == '__main__':
+    import sys
+    sys.path.append('/home/pi/ArmPi/')
+    from CameraCalibration.CalibrationConfig import *
+    import Camera
+    import time
+    import threading
+    
+
     target_color = ('red', 'green', 'blue')
     my_camera = Camera.Camera()
     my_camera.camera_open()
