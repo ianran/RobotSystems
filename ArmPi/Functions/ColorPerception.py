@@ -28,6 +28,14 @@ def getAreaMaxContour(contours):
 
     return area_max_contour, contour_area_max  # Return the largest contour
 
+def getROI(box):
+    x_min = min(box[0, 0], box[1, 0], box[2, 0], box[3, 0])
+    x_max = max(box[0, 0], box[1, 0], box[2, 0], box[3, 0])
+    y_min = min(box[0, 1], box[1, 1], box[2, 1], box[3, 1])
+    y_max = max(box[0, 1], box[1, 1], box[2, 1], box[3, 1])
+
+    return (x_min, x_max, y_min, y_max)
+
 class ColorPerception():
     # constructor
     # @param
@@ -47,6 +55,9 @@ class ColorPerception():
 
         self.last_x = 0
         self.last_y = 0
+
+
+
 
     # Perform bit operations on the original image and mask
     def thresh_image(self, image, low_color, high_color):
@@ -193,6 +204,7 @@ class ColorPerception():
                 # end if for max area
         cv2.putText(img, "Color: " + detect_color, (10, img.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.65, draw_color, 2)
         return img
+
 
 if __name__ == '__main__':
     import sys
