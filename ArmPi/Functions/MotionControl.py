@@ -58,8 +58,14 @@ class MotionControl():
         self.z_b = self.coordinate['blue'][2]
         self.z = self.z_r
 
+        # Gripper closed angle
         self.servo1 = 500
+        self.rotation_angle = 0
 
+
+    def set_loc(self, x, y):
+        self.world_x = x
+        self.world_y = y
 
     def initMove(self):
         Board.setBusServoPulse(1, self.servo1 - 50, 300)
@@ -84,7 +90,7 @@ class MotionControl():
 
 
 
-        result = self.AK.setPitchRangeMoving((world_X, world_Y - 2, 5), -90, -90, 0) # Do not fill in running time parameters, adaptive running time
+        result = self.AK.setPitchRangeMoving((self.world_x, self.world_y - 2, 5), -90, -90, 0) # Do not fill in running time parameters, adaptive running time
         if result == False:
             self.unreachable = True
         else:
@@ -111,7 +117,7 @@ class MotionControl():
                 continue
             Board.setBusServoPulse(1, self.servo1 - 280, 500)  # Paws open
             # Calculate the angle that the gripper needs to rotate
-            self.servo2_angle = getAngle(world_X, world_Y, rotation_angle)
+            self.servo2_angle = getAngle(self.world_x, self.world_y, self.rotation_angle)
             Board.setBusServoPulse(2, self.servo2_angle, 500)
             time.sleep(0.8)
 

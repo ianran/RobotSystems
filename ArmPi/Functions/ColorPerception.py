@@ -57,6 +57,15 @@ class ColorPerception():
         self.last_x = 0
         self.last_y = 0
 
+        self.range_rgb = {
+            'red': (0, 0, 255),
+            'blue': (255, 0, 0),
+            'green': (0, 255, 0),
+            'black': (0, 0, 0),
+            'white': (255, 255, 255),
+        }
+
+
 
 
 
@@ -89,6 +98,9 @@ class ColorPerception():
     def convert_world_frame(self, x, y):
         world_x, world_y = convertCoordinate(x, y, self.size) #Convert to real world coordinates
         return world_x, world_y
+
+    def get_loc(self):
+        return self.world_x, self.world_y
 
     def preprocess(self, img):
         img_h, img_w = img.shape[:2]
@@ -204,6 +216,7 @@ class ColorPerception():
 
                 # end if for max area
         cv2.putText(img, "Color: " + detect_color, (10, img.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.65, draw_color, 2)
+        self.world_x, self.world_y = world_x, world_y
         return img
 
 
