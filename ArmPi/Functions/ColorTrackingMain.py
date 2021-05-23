@@ -117,6 +117,8 @@ if __name__ == '__main__':
         if img is not None:
             frame = img.copy()
             Frame = perception.perception(frame, start_pick_up=False)
+            x,y = perception.get_loc()
+            move.set_loc(x,y)
             cv2.imshow('Frame', Frame)
             key = cv2.waitKey(1)
             if key == 27:
