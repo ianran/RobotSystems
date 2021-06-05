@@ -56,8 +56,12 @@ class Motion():
         self.AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500)
 
     def testMove(self):
-        self.AK.setPitchRangeMoving((20,20,10), -30, -30, -90, 1500)
-
+        self.AK.setPitchRangeMoving((0,20,10), -30, -30, -90, 1500)
+        time.sleep(2.5)
+        self.AK.setPitchRangeMoving((0,20,10), 0,-30,-90,1500)
+        time.sleep(2.5)
+        self.AK.setPitchRangeMoving((0,20,10), 0,0,0,1500)
+        time.sleep(2.5)
 
 
 # Simple test to make sure my code is working
@@ -69,7 +73,7 @@ if __name__ == "__main__":
     m.initMove()
 
     print('Finish init move')
-    time.sleep(5)
+    time.sleep(1.5)
     print('Starting test')
     m.testMove()
 
