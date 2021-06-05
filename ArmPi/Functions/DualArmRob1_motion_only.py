@@ -22,10 +22,11 @@ if __name__ == '__main__':
     # create motion object
     m = mot.Motion()
 
-    colors = ['red']#['red', 'green', 'blue']
+    colors = ['red', 'green', 'blue']
 
     for color in colors:
         m.initMove()
+        m.openPaws()
         time.sleep(2.5)
 
         m.moveToStorage(color)
@@ -41,3 +42,6 @@ if __name__ == '__main__':
         time.sleep(3)
 
         m.releaseCube_rob2()
+
+    m.initMove()
+    time.sleep(2.5)

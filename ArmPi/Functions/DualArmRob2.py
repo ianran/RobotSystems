@@ -21,7 +21,7 @@ import time
 if __name__ == '__main__':
     # create motion object
     m = mot.Motion()
-    colors = ['red']#['red', 'green', 'blue']
+    colors = ['red', 'green', 'blue']
 
     for color in colors:
         m.initMove()
@@ -35,3 +35,6 @@ if __name__ == '__main__':
         m.moveToStorage(color)
         m.openPaws()
         time.sleep(2.5)
+
+    m.initMove()
+    time.sleep(2.5)

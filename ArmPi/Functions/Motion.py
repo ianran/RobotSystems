@@ -123,7 +123,7 @@ class Motion():
         self.closePaws()
         time.sleep(2.5)
 
-        didIt = self.AK.setPitchRangeMoving(self.pre_grasp_loc, 0, -20, 20, 1500)
+        didIt = self.AK.setPitchRangeMoving(self.grasp_loc, 0, -20, 20, 1500)
         time.sleep(2.5)
 
     def releaseCube_rob2(self):
