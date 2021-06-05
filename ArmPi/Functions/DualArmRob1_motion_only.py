@@ -22,9 +22,22 @@ if __name__ == '__main__':
     # create motion object
     m = mot.Motion()
 
-    m.moveToStorage('red')
-    m.closePaws()
-    time.sleep(2.5)
+    colors = ['red']#['red', 'green', 'blue']
 
-    m.neutral()
-    time.sleep(2.5)
+    for color in colors:
+        m.initMove()
+        time.sleep(2.5)
+
+        m.moveToStorage(color)
+        m.closePaws()
+        time.sleep(2.5)
+
+        m.neutral()
+        time.sleep(2.5)
+
+        m.passCube_rob2()
+
+        ############## TODO wait for other robot to block
+        time.sleep(3)
+
+        m.releaseCube_rob2()

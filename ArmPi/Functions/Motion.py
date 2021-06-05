@@ -55,6 +55,9 @@ class Motion():
             'green': (-15 + 0.5, 6 - 0.5,  12),
             'blue':  (-15 + 0.5, 0 - 0.5,  12),
         }
+        self.pre_grasp_loc = (0, 15, 15)
+        self.grasp_loc = (0, 20, 15)
+
 
     def neutral(self):
         self.AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500
@@ -93,6 +96,7 @@ class Motion():
     #def moveToGrasp(self):
 
 
+    ########################## FUNCTIONS FOR ROBOT 2
     def graspHeldCube(self):
         # Move to init location
         self.initMove()
@@ -101,20 +105,43 @@ class Motion():
         time.sleep(2.5)
 
         # Move to pre-grasp location
-        didIt = self.AK.setPitchRangeMoving((0,15,15), 0, -20, 20, 1500)
+        didIt = self.AK.setPitchRangeMoving(self.pre_grasp_loc, 0, -20, 20, 1500)
         #print('I can grasp this cube location: ' + str(didIt))
         time.sleep(2.5)
 
-        didIt = self.AK.setPitchRangeMoving((0,20,15), 0, -20, 20, 1500)
+        didIt = self.AK.setPitchRangeMoving(self.grasp_loc, 0, -20, 20, 1500)
         #print('I can grasp this cube location: ' + str(didIt))
         time.sleep(2.5)
 
         self.closePaws()
 
 
+    ######################## FUNCTIONS FOR ROBOT 1
+
+    def passCube_rob2(self):
+        self.initMove()
+        self.closePaws()
+        time.sleep(2.5)
+
+        didIt = self.AK.setPitchRangeMoving(self.pre_grasp_loc, 0, -20, 20, 1500)
+        time.sleep(2.5)
+
+    def releaseCube_rob2(self):
+        self.openPaws()
+        time.sleep(3)
+
+        # move to pre-grasp location
+        self.AK.setPitchRangeMoving(self.pre_grasp_loc, 0, -20, 20, 1500)
+        time.sleep(2.5)
+
+
+    ###################### GENERIC FUNCTIONS
     def moveToStorage(self, color='red'):
         self.neutral()
         time.sleep(2.5)
+        wrist_angle = getAngle(self.coordinate[self.detect_color][0], \
+                                self.coordinate[self.detect_color][1], -90)
+        self.setWrist(wrist_angle)
 
         self.AK.setPitchRangeMoving(self.coordinate[color], -90, -90, 0)
         time.sleep(2.5)

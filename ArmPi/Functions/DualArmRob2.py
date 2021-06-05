@@ -21,11 +21,17 @@ import time
 if __name__ == '__main__':
     # create motion object
     m = mot.Motion()
+    colors = ['red']#['red', 'green', 'blue']
 
-    m.graspHeldCube()
+    for color in colors:
+        m.initMove()
+        time.sleep(5)
+        ################## TODO wait until see block
 
-    time.sleep(5)
+        m.graspHeldCube()
 
-    m.moveToStorage('red')
-    m.openPaws()
-    time.sleep(2.5)
+        time.sleep(5)
+
+        m.moveToStorage(color)
+        m.openPaws()
+        time.sleep(2.5)
