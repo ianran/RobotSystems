@@ -50,10 +50,19 @@ class Motion():
 
         self.servo1 = 500
 
+        self.coordinate = {
+            'red':   (-15 + 0.5, 12 - 0.5, 12),
+            'green': (-15 + 0.5, 6 - 0.5,  12),
+            'blue':  (-15 + 0.5, 0 - 0.5,  12),
+        }
+
+    def neutral(self):
+        self.AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500
+
     def initMove(self):
         Board.setBusServoPulse(1, self.servo1 - 50, 300)
         Board.setBusServoPulse(2, 500, 500)
-        self.AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500)
+        self.neutral()
 
     def closePaws(self):
         Board.setBusServoPulse(1, self.servo1, 300)
@@ -93,13 +102,23 @@ class Motion():
 
         # Move to pre-grasp location
         didIt = self.AK.setPitchRangeMoving((0,15,15), 0, -20, 20, 1500)
-        print('I can grasp this cube location: ' + str(didIt))
+        #print('I can grasp this cube location: ' + str(didIt))
         time.sleep(2.5)
-        
+
         didIt = self.AK.setPitchRangeMoving((0,20,15), 0, -20, 20, 1500)
-        print('I can grasp this cube location: ' + str(didIt))
+        #print('I can grasp this cube location: ' + str(didIt))
         time.sleep(2.5)
-        
+
+        self.closePaws()
+
+
+    def moveToStorage(self, color='red'):
+        self.neutral()
+        time.sleep(2.5)
+
+        self.AK.setPitchRangeMoving(self.coordinate[color], -90, -90, 0)
+        time.sleep(2.5)
+
 
 
 # Simple test to make sure my code is working
@@ -126,5 +145,7 @@ if __name__ == "__main__":
     time.sleep(2.5)
     m.openPaws()
     time.sleep(2.5)
+
+    m.graspHeldCube()
 
     print('Done')

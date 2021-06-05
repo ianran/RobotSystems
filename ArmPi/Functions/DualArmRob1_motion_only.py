@@ -22,10 +22,9 @@ if __name__ == '__main__':
     # create motion object
     m = mot.Motion()
 
-    m.graspHeldCube()
-
-    time.sleep(5)
-
     m.moveToStorage('red')
-    m.openPaws()
+    m.closePaws()
+    time.sleep(2.5)
+
+    m.neutral()
     time.sleep(2.5)
