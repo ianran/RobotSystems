@@ -63,6 +63,12 @@ class Motion():
 
     def setWrist(self, angle):
         Board.setBusServoPulse(2, angle, 500)
+    def setWristFlat(self):
+        self.setWrist(500)
+    def setWrist90(self):
+        self.setWrist(90)
+
+
 
     def testMove(self):
         self.AK.setPitchRangeMoving((0,20,10), -30, -30, -90, 1500)
@@ -73,7 +79,7 @@ class Motion():
         time.sleep(2.5)
 
     def graspHeldCube(self):
-
+        pass
 
 
 # Simple test to make sure my code is working
