@@ -69,13 +69,16 @@ class Motion():
         self.setWrist(120)
 
 
-
+    # a test move function (x,y,z) coordinates seem to be in centimeters
     def testMove(self):
+        time.sleep(8)
         self.AK.setPitchRangeMoving((0,20,10), -30, -30, -90, 1500)
         time.sleep(2.5)
         self.AK.setPitchRangeMoving((0,20,10), 0,-30,-90,1500)
         time.sleep(2.5)
         self.AK.setPitchRangeMoving((0,20,10), 0,0,0,1500)
+        time.sleep(2.5)
+        self.AK.setPitchRangeMoving((0,0,0), -30,-30,-90,1500)
         time.sleep(2.5)
 
     def graspHeldCube(self):
