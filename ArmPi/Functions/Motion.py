@@ -66,7 +66,7 @@ class Motion():
     def setWristFlat(self):
         self.setWrist(500)
     def setWrist90(self):
-        self.setWrist(90)
+        self.setWrist(120)
 
 
 
@@ -96,9 +96,10 @@ if __name__ == "__main__":
     m.testMove()
 
     print('Start moving wrist')
-    m.setWrist(500)
+    #m.setWrist(500)
+    m.setWrist90()
     time.sleep(2.5)
-    m.setWrist(0)
+    m.setWristFlat()
     time.sleep(2.5)
 
     m.closePaws()
