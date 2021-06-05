@@ -32,6 +32,7 @@ if __name__ == '__main__':
         m.moveToStorage(color)
         m.closePaws()
         time.sleep(2.5)
+        m.moveAwayStorage(color)
 
         m.neutral()
         time.sleep(2.5)

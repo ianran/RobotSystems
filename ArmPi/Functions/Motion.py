@@ -143,7 +143,17 @@ class Motion():
                                 self.coordinate[color][1], -90)
         self.setWrist(wrist_angle)
 
+        self.AK.setPitchRangeMoving((self.coordinate[color][0],\
+                                     self.coordinate[color][1], 7),\
+                                     -90, -90, 0)
+
         self.AK.setPitchRangeMoving(self.coordinate[color], -90, -90, 0)
+        time.sleep(2.5)
+
+    def moveAwayStorage(self, color):
+        self.AK.setPitchRangeMoving((self.coordinate[color][0],\
+                                     self.coordinate[color][1], 7),\
+                                     -90, -90, 0)
         time.sleep(2.5)
 
 

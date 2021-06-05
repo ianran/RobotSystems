@@ -34,6 +34,7 @@ if __name__ == '__main__':
 
         m.moveToStorage(color)
         m.openPaws()
+        m.moveAwayStorage(color)
         time.sleep(2.5)
 
     m.initMove()
