@@ -107,6 +107,12 @@ class ArmIK:
         #alpha is the given pitch angle
         #alpha1 and alpha2 are the range of pitch angle
         #movetime is the rotation time of the steering gear, in ms, if no time is given, it will be calculated automatically
+        #给定坐标coordinate_data和俯仰角alpha,以及俯仰角范围的范围alpha1, alpha2，自动寻找最接近给定俯仰角的解，并转到目标位置
+        #如果无解返回False,否则返回舵机角度、俯仰角、运行时间
+        #坐标单位cm， 以元组形式传入，例如(0, 5, 10)
+        #alpha为给定俯仰角
+        #alpha1和alpha2为俯仰角的取值范围
+        #movetime为舵机转动时间，单位ms, 如果不给出时间，则自动计算
         x, y, z = coordinate_data
         result1 = self.setPitchRange((x, y, z), alpha, alpha1)
         result2 = self.setPitchRange((x, y, z), alpha, alpha2)
