@@ -55,6 +55,15 @@ class Motion():
         Board.setBusServoPulse(2, 500, 500)
         self.AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500)
 
+    def closePaws(self):
+        Board.setBusServoPulse(1, self.servo1, 300)
+
+    def openPaws(self):
+        Board.setBusServoPulse(1, self.servo1 - 280, 500)  # Paws open
+
+    def setWrist(self, angle):
+        Board.setBusServoPulse(2, angle, 500)
+
     def testMove(self):
         self.AK.setPitchRangeMoving((0,20,10), -30, -30, -90, 1500)
         time.sleep(2.5)
@@ -62,6 +71,9 @@ class Motion():
         time.sleep(2.5)
         self.AK.setPitchRangeMoving((0,20,10), 0,0,0,1500)
         time.sleep(2.5)
+
+    def graspHeldCube(self):
+
 
 
 # Simple test to make sure my code is working
@@ -76,5 +88,16 @@ if __name__ == "__main__":
     time.sleep(1.5)
     print('Starting test')
     m.testMove()
+
+    print('Start moving wrist')
+    m.setWrist(500)
+    time.sleep(2.5)
+    m.setWrist(0)
+    time.sleep(2.5)
+
+    m.closePaws()
+    time.sleep(2.5)
+    m.openPaws()
+    time.sleep(2.5)
 
     print('Done')
