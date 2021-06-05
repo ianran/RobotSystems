@@ -4,7 +4,10 @@
 # My rewrite of the previous software that hopefully sucks less.
 # Basically gets rid of the logic and just has simple arm movement commands.
 
-import Time
+import sys
+sys.path.append('/home/pi/ArmPi/')
+
+import time
 
 from ArmIK.Transform import *
 from ArmIK.ArmMoveIK import *
@@ -45,12 +48,15 @@ class Motion():
     def __init__(self):
         self.AK = ArmIK()
 
+        self.servo1 = 500
+
     def initMove(self):
         Board.setBusServoPulse(1, self.servo1 - 50, 300)
         Board.setBusServoPulse(2, 500, 500)
         self.AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500)
 
-
+    def testMove(self):
+        self.AK.setPitchRangeMoving((20,20,10), -30, -30, -90, 1500)
 
 
 
@@ -63,5 +69,8 @@ if __name__ == "__main__":
     m.initMove()
 
     print('Finish init move')
-    time.sleep(5000)
+    time.sleep(5)
+    print('Starting test')
+    m.testMove()
+
     print('Done')
