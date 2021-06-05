@@ -139,8 +139,8 @@ class Motion():
     def moveToStorage(self, color='red'):
         self.neutral()
         time.sleep(2.5)
-        wrist_angle = getAngle(self.coordinate[self.detect_color][0], \
-                                self.coordinate[self.detect_color][1], -90)
+        wrist_angle = getAngle(self.coordinate[color][0], \
+                                self.coordinate[color][1], -90)
         self.setWrist(wrist_angle)
 
         self.AK.setPitchRangeMoving(self.coordinate[color], -90, -90, 0)
