@@ -51,16 +51,16 @@ class Motion():
         self.servo1 = 500
 
         self.coordinate = {
-            'red':   (-15 + 0.5, 12 - 0.5, 12),
-            'green': (-15 + 0.5, 6 - 0.5,  12),
-            'blue':  (-15 + 0.5, 0 - 0.5,  12),
+            'red':   (-15 + 0.5, 12 - 0.5, 1.5),
+            'green': (-15 + 0.5, 6 - 0.5,  1.5),
+            'blue':  (-15 + 0.5, 0 - 0.5,  1.5),
         }
         self.pre_grasp_loc = (0, 15, 15)
         self.grasp_loc = (0, 20, 15)
 
 
     def neutral(self):
-        self.AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500
+        self.AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500)
 
     def initMove(self):
         Board.setBusServoPulse(1, self.servo1 - 50, 300)
