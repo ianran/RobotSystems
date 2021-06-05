@@ -92,8 +92,14 @@ class Motion():
         time.sleep(2.5)
 
         # Move to pre-grasp location
-        didIt = self.AK.setPitchRangeMoving((0,15,10), -30, -20, 20, 1500)
+        didIt = self.AK.setPitchRangeMoving((0,15,15), 0, -20, 20, 1500)
         print('I can grasp this cube location: ' + str(didIt))
+        time.sleep(2.5)
+        
+        didIt = self.AK.setPitchRangeMoving((0,20,15), 0, -20, 20, 1500)
+        print('I can grasp this cube location: ' + str(didIt))
+        time.sleep(2.5)
+        
 
 
 # Simple test to make sure my code is working
