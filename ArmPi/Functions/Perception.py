@@ -78,6 +78,9 @@ class Perception():
 
         return area_max_contour, contour_area_max  # Return the largest contour
 
+    # Perform bit operations on the original image and mask
+    def thresh_image(self, image, low_color, high_color):
+        return cv2.inRange(image, low_color, high_color)
 
     def get_larget_contour(self, contours):
         return self.getAreaMaxContour(contours)  # Find the largest contour
