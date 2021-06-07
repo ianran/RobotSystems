@@ -24,7 +24,7 @@ if __name__ == '__main__':
     # create motion object
     m = mot.Motion()
     colors = ['red', 'green', 'blue']
-    p = percep.Perception(['red'])
+    p = percep.Perception(colors)
     box_thresh = 14000
 
     my_camera = Camera.Camera()
