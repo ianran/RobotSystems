@@ -40,7 +40,7 @@ if __name__ == '__main__':
         m.passCube_rob2()
 
         ############## TODO wait for other robot to block
-        time.sleep(3)
+        time.sleep(1000)
 
         m.releaseCube_rob2()
 
