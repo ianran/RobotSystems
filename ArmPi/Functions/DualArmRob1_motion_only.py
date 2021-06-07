@@ -29,9 +29,9 @@ if __name__ == '__main__':
     p = percep.Perception(colors)
     my_camera = Camera.Camera()
     my_camera.camera_open()
-    box_thresh = 11000
+    box_thresh = [11000, 9500, 3000]
 
-    for color in colors:
+    for i, color in enumerate(colors):
         m.initMove()
         m.openPaws()
         time.sleep(2.5)
@@ -54,7 +54,7 @@ if __name__ == '__main__':
                 # get box area
                 box_area = p.get_box_area(img)
                 if box_area is not None:
-                    if box_area < box_thresh:
+                    if box_area < box_thresh[i]:
                         print('Area During Release: ', box_area)
                         print("Cube Detected, Releasing")
                         break
