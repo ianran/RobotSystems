@@ -23,7 +23,7 @@ import cv2
 if __name__ == '__main__':
     # create motion object
     m = mot.Motion()
-    colors = ['red', 'green', 'blue']
+    colors = ['red']
     p = percep.Perception(colors)
     box_thresh = [13000, 9000, 11000]
 
