@@ -25,12 +25,12 @@ if __name__ == '__main__':
     m = mot.Motion()
     colors = ['red', 'green', 'blue']
     p = percep.Perception(colors)
-    box_thresh = 14000
+    box_thresh = [13000, 9000, 11000]
 
     my_camera = Camera.Camera()
     my_camera.camera_open()
 
-    for color in colors:
+    for i, color in enumerate(colors):
         m.initMove()
         time.sleep(5)
         ################## TODO wait until see block
@@ -41,7 +41,7 @@ if __name__ == '__main__':
                 # get box area
                 box_area = p.get_box_area(img)
                 if box_area is not None:
-                    if box_area > box_thresh:
+                    if box_area > box_thresh[i]:
                         print("Cube Detected, Grabbing")
                         break
 
