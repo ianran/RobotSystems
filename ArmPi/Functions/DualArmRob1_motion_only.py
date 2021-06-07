@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
     colors = ['red', 'green', 'blue']
 
-    p = percep.Perception(['red'])
+    p = percep.Perception(colors)
     my_camera = Camera.Camera()
     my_camera.camera_open()
     box_thresh = 11000
