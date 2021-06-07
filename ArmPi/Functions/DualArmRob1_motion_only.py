@@ -63,7 +63,8 @@ if __name__ == '__main__':
                 key = cv2.waitKey(1)
                 if key == 27:
                     break
-
+                
+        time.sleep(1)
         m.releaseCube_rob2()
 
     m.initMove()
