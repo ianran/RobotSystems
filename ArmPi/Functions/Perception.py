@@ -92,7 +92,6 @@ class Perception():
 
         for color in self.color_range:
             if color in self.target_colors:
-                max_area = 0
                 frame_mask = self.thresh_image( frame_lab, \
                                                 self.color_range[color][0], \
                                                 self.color_range[color][1])
@@ -101,10 +100,10 @@ class Perception():
                 areaMaxContour, area_max = self.get_larget_contour(contours)
 
                 if areaMaxContour is not None:
-                    if max_area > self.min_box_area:  # Have found the largest area
-                        self.held_box_area = max_area
+                    if area_max > self.min_box_area:  # Have found the largest area
+                        self.held_box_area = area_max
                         print('Box Color: ', color)
-                        print('Max Area: ', max_area)
+                        print('Max Area: ', area_max)
 
         # areaMaxContour = 0
         # color_area_max = None
