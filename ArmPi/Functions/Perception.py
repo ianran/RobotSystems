@@ -111,10 +111,10 @@ class Perception():
                         areaMaxContour_max = areaMaxContour
 
 
-        if max_area > self.min_box_area:  # Have found the largest area
-            self.held_box_area = max_area
-            print('Box Color: ', i)
-            print('Max Area: ', max_area)
+            if max_area > self.min_box_area:  # Have found the largest area
+                self.held_box_area = max_area
+                print('Box Color: ', i)
+                print('Max Area: ', max_area)
 
     def box_is_obscure(self):
         if self.held_box_area < self.obscure_thresh:
