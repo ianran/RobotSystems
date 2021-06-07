@@ -90,30 +90,44 @@ class Perception():
         img_copy = img.copy()
         frame_lab = self.preprocess(img_copy)
 
-        max_area = 0
-        areaMaxContour = 0
-        color_area_max = None
-
-        for i in self.color_range:
-            if i in self.target_colors:
-                detect_color = i
+        for color in self.color_range:
+            if color in self.target_colors:
+                max_area = 0
                 frame_mask = self.thresh_image( frame_lab, \
-                                                self.color_range[detect_color][0], \
-                                                self.color_range[detect_color][1])
+                                                self.color_range[color][0], \
+                                                self.color_range[color][1])
                 closed = self.fill_image(frame_mask)
                 contours = self.get_contours(closed)
                 areaMaxContour, area_max = self.get_larget_contour(contours)
 
                 if areaMaxContour is not None:
-                    if area_max > max_area:  # Find the largest area of all of the colors
-                        max_area = area_max
-                        color_area_max = i
-                        areaMaxContour_max = areaMaxContour
+                    if max_area > self.min_box_area:  # Have found the largest area
+                        self.held_box_area = max_area
+                        print('Box Color: ', color)
+                        print('Max Area: ', max_area)
 
-                if max_area > self.min_box_area:  # Have found the largest area
-                    self.held_box_area = max_area
-                    print('Box Color: ', i)
-                    print('Max Area: ', max_area)
+        # areaMaxContour = 0
+        # color_area_max = None
+        # for i in self.color_range:
+        #     if i in self.target_colors:
+        #         detect_color = i
+        #         frame_mask = self.thresh_image( frame_lab, \
+        #                                         self.color_range[detect_color][0], \
+        #                                         self.color_range[detect_color][1])
+        #         closed = self.fill_image(frame_mask)
+        #         contours = self.get_contours(closed)
+        #         areaMaxContour, area_max = self.get_larget_contour(contours)
+
+        #         if areaMaxContour is not None:
+        #             if area_max > max_area:  # Find the largest area of all of the colors
+        #                 max_area = area_max
+        #                 color_area_max = i
+        #                 areaMaxContour_max = areaMaxContour
+
+        #         if max_area > self.min_box_area:  # Have found the largest area
+        #             self.held_box_area = max_area
+        #             print('Box Color: ', i)
+        #             print('Max Area: ', max_area)
 
     def box_is_obscure(self):
         if self.held_box_area < self.obscure_thresh:
