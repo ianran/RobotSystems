@@ -105,6 +105,8 @@ class Perception():
                         print('Box Color: ', color)
                         print('Max Area: ', area_max)
 
+                        return area_max
+
         # areaMaxContour = 0
         # color_area_max = None
         # for i in self.color_range:

@@ -14,7 +14,9 @@
 
 import Motion as mot
 import time
-
+import Perception as percep
+import Camera
+import cv2
 
 
 # main entry point
@@ -22,11 +24,30 @@ if __name__ == '__main__':
     # create motion object
     m = mot.Motion()
     colors = ['red', 'green', 'blue']
+    p = percep.Perception(['red'])
+    box_thresh = 14000
+
+    my_camera = Camera.Camera()
+    my_camera.camera_open()
 
     for color in colors:
         m.initMove()
         time.sleep(5)
         ################## TODO wait until see block
+        while True:
+            img = my_camera.frame
+            if img is not None:
+                frame = img.copy()
+                # get box area
+                box_area = p.get_box_area(img)
+                if box_area > box_thresh:
+                    break
+
+                cv2.imshow('Frame', frame)
+                key = cv2.waitKey(1)
+                if key == 27:
+                    break
+
 
         m.graspHeldCube()
 
