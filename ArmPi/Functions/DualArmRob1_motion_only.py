@@ -14,7 +14,9 @@
 
 import Motion as mot
 import time
-
+import Perception as percep
+import Camera
+import cv2
 
 
 # main entry point
@@ -23,6 +25,11 @@ if __name__ == '__main__':
     m = mot.Motion()
 
     colors = ['red', 'green', 'blue']
+
+    p = percep.Perception(['red'])
+    my_camera = Camera.Camera()
+    my_camera.camera_open()
+    box_thresh = 14000
 
     for color in colors:
         m.initMove()
@@ -40,7 +47,20 @@ if __name__ == '__main__':
         m.passCube_rob2()
 
         ############## TODO wait for other robot to block
-        time.sleep(1000)
+        while True:
+            img = my_camera.frame
+            if img is not None:
+                frame = img.copy()
+                # get box area
+                box_area = p.get_box_area(img)
+                if box_area < box_thresh:
+                    print("Cube Detected, Releasing")
+                    break
+
+                cv2.imshow('Frame', frame)
+                key = cv2.waitKey(1)
+                if key == 27:
+                    break
 
         m.releaseCube_rob2()
 

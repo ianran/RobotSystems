@@ -41,7 +41,7 @@ if __name__ == '__main__':
                 # get box area
                 box_area = p.get_box_area(img)
                 if box_area > box_thresh:
-                    print("Cube Detected")
+                    print("Cube Detected, Grabbing")
                     break
 
                 cv2.imshow('Frame', frame)
