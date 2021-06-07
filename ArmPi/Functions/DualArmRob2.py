@@ -40,9 +40,10 @@ if __name__ == '__main__':
                 frame = img.copy()
                 # get box area
                 box_area = p.get_box_area(img)
-                if box_area > box_thresh:
-                    print("Cube Detected, Grabbing")
-                    break
+                if box_area is not None:
+                    if box_area > box_thresh:
+                        print("Cube Detected, Grabbing")
+                        break
 
                 cv2.imshow('Frame', frame)
                 key = cv2.waitKey(1)
